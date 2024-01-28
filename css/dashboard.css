@@ -1,0 +1,70 @@
+body{
+    background-color: rgb(62, 117, 62);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+  .dashboard {
+    display: flex;
+    flex-wrap: wrap; /* Allow boxes to wrap to the next line on small screens */
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .box {
+    width: 20rem; /* Adjusted width using rem units */
+    margin: 1.5rem; /* Add margin between boxes using rem units */
+    padding: 2rem;
+    background-color: #f9f7e8;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+
+
+.box-image {
+    width: 250px; 
+    height: 200px; 
+    margin-bottom: 1.5rem; 
+    object-fit: cover; 
+    border-radius: 10%; 
+}
+  
+  .box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem; 
+  }
+  
+  .box p {
+    font-size: 1rem; 
+  }
+  
+  
+  .box:hover {
+    transform: scale(1.05);
+  }
+  
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  /* Media queries for responsiveness */
+  
+  @media screen and (max-width: 48rem) {
+    .box {
+      width: 40rem; /* Adjusted width for smaller screens using rem units */
+    }
+  }
+  
+  @media screen and (max-width: 36rem) {
+    .box {
+      width: 100%; /* Make boxes full width on even smaller screens using rem units */
+    }
+  }
+  

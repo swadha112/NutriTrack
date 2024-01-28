@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack - Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard">
+        <div class="box" onClick="loadPage(meal.html)">
+            <img src="../assets/girl_food.jpeg" alt="meal icon" class="box-image">
+            <h2>Meal Tracking</h2>
+            <p>Track your daily meals.</p>
+            <iframe id="mealFrame"></iframe>
+        </div>
+        <div class="box" onclick="loadPage('activity.html')">
+            <img src="../assets/boy_exercise.avif" alt="Activity Icon" class="box-image">
+            <h2>Activity Tracker</h2>
+            <p>Monitor your physical activities and workouts.</p>
+            <iframe id="activityFrame"></iframe>
+        </div>
+        <div class="box" onclick="loadPage('stats.html')">
+            <img src="../assets/girlicon.png" alt="Stats Icon" class="box-image">
+            <h2>Stats</h2>
+            <p>View your health and fitness statistics.</p>
+            <iframe id="statsFrame"></iframe>
+        </div>
+    </div>
+    <script>
+        function loadPage(page){
+            document.getElementById('mealFrame').src= "";
+            document.getElementById('activityFrame').src= "";
+            document.getElementById('statsFrame').src= "";
+
+            document.getElementById('mealFrame').src= page;
+            document.getElementById('activityFrame').src= page;
+            document.getElementById('statsFrame').src= page;
+        }
+    </script>
+
+
+</body>
+</html>
