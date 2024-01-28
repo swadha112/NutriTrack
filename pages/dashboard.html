@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="dashboard">
-        <div class="box" onClick="loadPage(meal.html)">
+        <div class="box" onclick="loadPage('meal.html')">
             <img src="../assets/girl_food.jpeg" alt="meal icon" class="box-image">
             <h2>Meal Tracking</h2>
             <p>Track your daily meals.</p>
@@ -28,14 +28,8 @@
         </div>
     </div>
     <script>
-        function loadPage(page){
-            document.getElementById('mealFrame').src= "";
-            document.getElementById('activityFrame').src= "";
-            document.getElementById('statsFrame').src= "";
-
-            document.getElementById('mealFrame').src= page;
-            document.getElementById('activityFrame').src= page;
-            document.getElementById('statsFrame').src= page;
+        function loadPage(page) {
+          window.location.href = page;
         }
     </script>
 
