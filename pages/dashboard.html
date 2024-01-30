@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriTrack - Dashboard</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="import" href="../pages/navbar.html   ">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
+    <div id="nav-placeholder">
+
+    </div>
     <div class="dashboard">
         <div class="box" onclick="loadPage('meal.html')">
             <img src="../assets/girl_food.jpeg" alt="meal icon" class="box-image">
@@ -31,6 +36,9 @@
         function loadPage(page) {
           window.location.href = page;
         }
+        $(function(){
+    $("#nav-placeholder").load("navbar.html");
+});
     </script>
 
 
