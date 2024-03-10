@@ -70,3 +70,17 @@ body{
     }
   }
   
+  #tip-bar {
+    bottom: 0;
+    width: 100%;
+    background-color: #f9f7e8;
+    color:rgb(62, 117, 62);
+    padding: 10px;
+    text-align: center;
+    display: none;
+    font-size: medium;
+}
+
+#nutrient-tip {
+    margin: 0;
+}
