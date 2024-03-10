@@ -42,7 +42,40 @@
     $("#nav-placeholder").load("navbar.html");
 });
     </script>
+<script>
+    const nutrientTips = [
+    "Tip : Stay hydrated by drinking enough water throughout the day.",
+    "Tip : Include sources of lean protein in your meals for muscle health.",
+    "Tip : Get enough sleep to support overall well-being.",
+    "Tip : Consume a variety of colorful fruits and vegetables for a well-balanced diet.",
+    "Tip : Limit added sugars and processed foods for better health.",
+    "Tip : Choose whole grains for fiber and sustained energy.",
+    "Tip : Incorporate healthy fats, such as those found in avocados and nuts, into your diet.",
+    "Tip : Be mindful of portion sizes to avoid overeating.",
+    "Tip : Include dairy or fortified alternatives for adequate calcium intake.",
+    "Tip : Engage in regular physical activity to support your overall health and well-being."
+];
 
+function displayRandomTip() {
+    const randomIndex = Math.floor(Math.random() * nutrientTips.length);
+    document.getElementById("nutrient-tip").innerText = nutrientTips[randomIndex];
+}
+
+function displayTipBar() {
+    const tipBar = document.getElementById("tip-bar");
+    tipBar.style.display = "block";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    displayRandomTip();
+    displayTipBar();
+});
+
+document.addEventListener("scroll", function () {
+    displayRandomTip(); 
+});
+
+</script>
 
 </body>
 </html>
