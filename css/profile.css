@@ -7,29 +7,41 @@ body {
 }
 
 /* Container Styles */
-.box-container {
-    background-color: #f9f7e8;
-    margin-top: auto;
-    min-height: 90vh;
-    min-width: 80vw;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-}
-
-/* Form Styles */
-.form-content {
-    padding: 20px;
-}
-
-.form-items {
-    max-width: 400px;
+.register {
+    max-width: 800px; 
     margin: 0 auto;
+    padding: 8%;
 }
 
-.form-items h2 {
+/* Form Content Styles */
+.form-content {
+    background: #f9f7e8;
+    border-top-left-radius: 20% 50%;
+    border-bottom-left-radius: 20% 50%;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Image Styles */
+.img {
+    flex: 1; /* Make the image take one-third of the container's width */
+    text-align: center;
+}
+
+.img img {
+    width: 200px; 
+    border-radius: 50%; 
+}
+
+/* Form Items Styles */
+.form-items {
+    flex: 2; /* Make the form items take two-thirds of the container's width */
+    padding: 0 20px; 
+}
+
+.form-items h1 {
     margin-bottom: 20px;
     text-align: center;
 }
@@ -47,18 +59,7 @@ input[type="number"] {
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-/* Button Styles */
-input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+    box-sizing: border-box; 
 }
 
 /* Radio Button Styles */
@@ -66,13 +67,19 @@ input[type="submit"] {
     margin-right: 20px;
 }
 
-/* Logo Styles */
-.register-left {
-    text-align: center;
-    padding: 20px;
-}
+/* Media Query */
+@media screen and (max-width: 768px) {
+    .form-content {
+        flex-direction: column; 
+    }
 
-.register-left img {
-    width: 50%;
-    margin-bottom: 15px;
+    .img,
+    .form-items {
+        flex: 1; /* Make both image and form items take full width on smaller screens */
+        text-align: center;
+    }
+
+    .form-items {
+        padding: 0; 
+    }
 }

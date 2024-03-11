@@ -9,26 +9,22 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
-    <div>
+    <div class="register">
         <div id="nav-placeholder"></div>
-        <div class="box-container">
             <div class="row">
-                <div class="col-md-3 register-left">
-                    <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
-                    <h3>Welcome</h3>
-                    <p>Tell us about yourself!</p>
-                    <input type="submit" name="" value="Login"/><br/>
-                </div>
-                <div class="form-content">
+                <div class="col-md-9 form-content">
+                    <div class="img">
+                        <image id="profileImage" src="../assets/profile.jpeg" />
+                    </div>
                     <div class="form-items">
-                        <h2>User Profile</h2>
-                        <p>fill in the data below.</p>
+                        <h1>User Profile</h1>
+                        <p>Fill in the data below.</p>
                         <form class="requires-validation" novalidate>
-                            <div class="col-md-3">
-                                <input class="form control" placeholder="First Name"  id="firstName" required />
+                            <div class="">
+                                <input class="form-control" type="text" placeholder="First Name"  id="firstName" required />
                             </div>
-                            <div class="col-md-3">
-                                <input class="form control" placeholder="Last Name"  id="lastName" required />
+                            <div class="">
+                                <input class="form-control" type="text" placeholder="Last Name"  id="lastName" required />
                             </div>
                             <div class="form-group">
                                 <div class="maxl">
@@ -57,7 +53,7 @@
 
             </div>
 
-        </div>
+        
     </div>
 </body>
 </html>
