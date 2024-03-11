@@ -1,0 +1,78 @@
+/* Body Styles */
+body {
+    background-color: rgb(62, 117, 62);
+    font-family: 'Lora', serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styles */
+.box-container {
+    background-color: #f9f7e8;
+    margin-top: auto;
+    min-height: 90vh;
+    min-width: 80vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+/* Form Styles */
+.form-content {
+    padding: 20px;
+}
+
+.form-items {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-items h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-items p {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button Styles */
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Radio Button Styles */
+.radio {
+    margin-right: 20px;
+}
+
+/* Logo Styles */
+.register-left {
+    text-align: center;
+    padding: 20px;
+}
+
+.register-left img {
+    width: 50%;
+    margin-bottom: 15px;
+}
