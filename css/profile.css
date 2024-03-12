@@ -8,7 +8,7 @@ body {
 
 /* Container Styles */
 .register {
-    max-width: 800px; 
+    /* max-width: 800px;  */
     margin: 0 auto;
     padding: 8%;
 }
@@ -19,6 +19,7 @@ body {
     border-top-left-radius: 20% 50%;
     border-bottom-left-radius: 20% 50%;
     min-height: 70vh;
+    min-width: 70vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,4 +83,14 @@ input[type="number"] {
     .form-items {
         padding: 0; 
     }
+}
+
+.form-items button {
+    background-color: rgb(62, 117, 62);;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
 }
