@@ -19,12 +19,14 @@
                     <div class="form-items">
                         <h1>User Profile</h1>
                         <p>Fill in the data below.</p>
-                        <form action="dashboard.html" method="get">
+                        <form action="process.php " method="post">
+                            <input type="hidden" name="username" value="<?php echo $_GET['username']; ?>">
                             <div class="">
-                                <input class="form-control" type="text" placeholder="First Name"  id="firstName" required />
+                                <input class="form-control" type="text" placeholder="First Name" name="firstName" required />
                             </div>
                             <div class="">
-                                <input class="form-control" type="text" placeholder="Last Name"  id="lastName" required />
+                                <input class="form-control" type="text" placeholder="Last Name" name="lastName" required />
+                                
                             </div>
                             <div class="form-group">
                                 <div class="maxl">
