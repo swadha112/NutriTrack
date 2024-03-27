@@ -1,6 +1,7 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
+    $password = $_POST['password']; // Note: This is the plaintext password
     $firstname = $_POST['firstName'];
     $lastname = $_POST['lastName'];
     $age = $_POST['age'];
@@ -18,27 +19,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (!empty($errors)) {
-
         foreach ($errors as $error) {
             echo "<p>Error: $error</p>";
         }
     } else {
-        
-        $db = new PDO("pgsql:host=localhost; dbname=nutritrack", 'postgres', 'swadhak');
-        $sql = "UPDATE users SET age = :age, height = :height, weight = :weight, firstname = :firstname, lastname = :lastname, gender = :gender WHERE username = :username";
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':firstname', $firstname);
-        $stmt->bindParam(':lastname', $lastname);
-        $stmt->bindParam(':age', $age);
-        $stmt->bindParam(':height', $height);
-        $stmt->bindParam(':weight', $weight);
-        $stmt->bindParam(':gender', $gender);
-        $stmt->execute();
-       
-        
-        header("Location: dashboard.html");
-        exit();
+        try {
+            // Hash the password before storing it
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            $db = new PDO("pgsql:host=localhost; dbname=nutritrack", 'postgres', 'swadhak');
+            $sql = "INSERT INTO users (username, password, firstname, lastname, age, height, weight, gender) 
+                    VALUES (:username, :password, :firstname, :lastname, :age, :height, :weight, :gender)";
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':password', $hashedPassword); // Store hashed password
+            $stmt->bindParam(':firstname', $firstname);
+            $stmt->bindParam(':lastname', $lastname);
+            $stmt->bindParam(':age', $age);
+            $stmt->bindParam(':height', $height);
+            $stmt->bindParam(':weight', $weight);
+            $stmt->bindParam(':gender', $gender);
+            $stmt->execute();
+
+            // Redirect to dashboard.html after successful insertion
+            header("Location: dashboard.html");
+            exit();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }
 ?>

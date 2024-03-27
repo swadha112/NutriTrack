@@ -19,8 +19,8 @@
                     <div class="form-items">
                         <h1>User Profile</h1>
                         <p>Fill in the data below.</p>
-                        <form action="process.php " method="post">
-                            <input type="hidden" name="username" value="<?php echo $_GET['username']; ?>">
+                        <form action="process.php " method="post" id="profileForm">
+                            <input type="hidden" id="username" name="username">
                             <div class="">
                                 <input class="form-control" type="text" placeholder="First Name" name="firstName" required />
                             </div>
@@ -49,14 +49,20 @@
                             <div>
                                 <input class="form-control" type="text" name="weight" placeholder="Weight (kg)" required>
                             </div>
+                            
+                            <div>
+                                <input type="password" name="password" style="display:none">
+                            </div>
                             <button type="submit">Save</button>
                         </form>
                     </div>
                 </div>
-
             </div>
-
-        
     </div>
+
+    <script>
+        // Populate hidden input fields with username and password from localStorage
+        document.getElementById("username").value = localStorage.getItem("username");
+           </script>
 </body>
 </html>
