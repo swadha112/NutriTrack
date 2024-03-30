@@ -14,8 +14,7 @@
         <div class="right-side">
             <div class="register-form">
                 <h2>Create your NutriTrack Account</h2>
-                <form action="profile.html" method="get">
-
+                <form id="registrationForm" action="profile.html" method="post" onsubmit="return submitForm()">
                     <label for="newUsername">Username:</label>
                     <input type="text" id="newUsername" name="newUsername" required>
 
@@ -30,5 +29,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function submitForm() {
+            // Gather form data
+            var username = document.getElementById("newUsername").value;
+            var password = document.getElementById("newPassword").value;
+
+            // Store username and password in localStorage
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            return true; // Allow form submission
+        }
+    </script>
 </body>
 </html>
