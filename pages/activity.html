@@ -5,34 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <link rel="stylesheet" href="navbar.html">
     <style>
-      body {
-          background-color: rgb(62, 117, 62);
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-      }
+        body {
+            background-color: rgb(62, 117, 62);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-      .dashboard {
-          background-color: rgb(62, 117, 62);
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-around;
-          align-items: center;
-          min-height: 100vh;
-      }
-      </style>
+        .dashboard {
+            background-color: rgb(62, 117, 62);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            background-color: #f9f7e8;
+            border-radius: 10px;
+            box-shadow: 0 0 10px;
+            margin: 40px auto 0 ;
+            /* padding: 2%; */
+            height: 80vh;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box-img {
+            width: 200px; /* Adjust size as needed */
+            height: 200px; /* Adjust size as needed */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .addActivityButton{
+            /* position: absolute; */
+            /* transform: translateX(-50%);transform: translateX(-50%); */
+            width: 30%;
+            height: 95%;
+            background-color: rgb(62, 117, 62);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .activity-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .activity-input {
+            width: 70%;
+            height: 95%;
+            max-width: 200px;
+            margin-right: 10px;
+        }
+
+        .hours-input {
+            width: 25%;
+            height: 75%;
+            max-width: 100px;
+            margin-right: 10px;
+        }
+
+        .calories-display {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div id="nav-placeholder">
+<div id="nav-placeholder"></div>
+<div class="box">
+    <h1>ACTIVITY TRACKER</h1>
+    <h2>Enter your daily activity here!</h2>
+    <img src="../assets/boy_exercise.avif" alt="Exercising image" class="box-img"/>
 
+    <div class="activity-container">
+        <select id="activityInput" class="activity-input">
+            <!-- Populate options dynamically from database -->
+            <option value="1">Running</option>
+            <option value="2">Swimming</option>
+            <!-- Add more options as needed -->
+        </select>
+        <input type="number" id="hoursInput" class="hours-input" placeholder="Hours">
+        <button class="addActivityButton">Add</button>
     </div>
-    
-    <script>
+    <div class="calories-display" id="caloriesDisplay"></div>
+    <div id="activityList">
+        <!-- Added activities will be displayed here -->
+    </div>
+</div>
+
+<script>
     $(function(){
-      $("#nav-placeholder").load("navbar.html");
+        $("#nav-placeholder").load("navbar.html");
+        $.ajax({
+        url: 'fetch_activity_names.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            response.forEach(function(activity) {
+                $('#activityInput').append($('<option>', {
+                    value: activity.activityname,
+                    text: activity.activityname
+                }));
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching activity names:', error);
+        }
     });
-    </script>
+
+    // Event listener for the "Add Activity" button
+    $('.addActivityButton').click(function() {
+        var activityName = $('#activityInput').val();
+        var hours = $('#hoursInput').val();
+
+        // Fetch calories burnt for the selected activity from the database
+        $.ajax({
+            url: 'fetch_calories_burnt.php',
+            method: 'GET',
+            dataType: 'json',
+            data: { activityName: activityName },
+            success: function(response) {
+                var caloriesBurnt = response.caloriesburnt * hours;
+                var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + caloriesBurnt;
+                $('<div>').text(activityDetails).appendTo('#activityList');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching calories burnt:', error);
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
