@@ -92,15 +92,15 @@
 
     <div class="activity-container">
         <select id="activityInput" class="activity-input">
-            <!-- Populate options dynamically from database -->
-            <option value="1">Running</option>
-            <option value="2">Swimming</option>
-            <!-- Add more options as needed -->
+            <option value="Running">Running</option>
+            <option value="Swimming">Swimming</option>
+            <option value="Cycling">Cycling</option>
+            <!-- Add more dummy values as needed -->
         </select>
         <input type="number" id="hoursInput" class="hours-input" placeholder="Hours">
-        <button class="addActivityButton">Add</button>
+        <button class="addActivityButton">Add Activity</button>
     </div>
-    <div class="calories-display" id="caloriesDisplay"></div>
+
     <div id="activityList">
         <!-- Added activities will be displayed here -->
     </div>
@@ -108,46 +108,15 @@
 
 <script>
     $(function(){
-        $("#nav-placeholder").load("navbar.html");
-        $.ajax({
-        url: 'fetch_activity_names.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            response.forEach(function(activity) {
-                $('#activityInput').append($('<option>', {
-                    value: activity.activityname,
-                    text: activity.activityname
-                }));
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching activity names:', error);
-        }
-    });
+        $('.addActivityButton').click(function() {
+            var activityName = $('#activityInput').val();
+            var hours = $('#hoursInput').val();
+            var caloriesBurnt = Math.floor(Math.random() * 1000); // Dummy value for calories burnt
 
-    // Event listener for the "Add Activity" button
-    $('.addActivityButton').click(function() {
-        var activityName = $('#activityInput').val();
-        var hours = $('#hoursInput').val();
-
-        // Fetch calories burnt for the selected activity from the database
-        $.ajax({
-            url: 'fetch_calories_burnt.php',
-            method: 'GET',
-            dataType: 'json',
-            data: { activityName: activityName },
-            success: function(response) {
-                var caloriesBurnt = response.caloriesburnt * hours;
-                var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + caloriesBurnt;
-                $('<div>').text(activityDetails).appendTo('#activityList');
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching calories burnt:', error);
-            }
+            var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + caloriesBurnt;
+            $('<div>').text(activityDetails).appendTo('#activityList');
         });
     });
-});
 </script>
 </body>
 </html>
