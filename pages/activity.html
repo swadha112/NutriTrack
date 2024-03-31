@@ -27,7 +27,6 @@
             border-radius: 10px;
             box-shadow: 0 0 10px;
             margin: 40px auto 0 ;
-            /* padding: 2%; */
             height: 80vh;
             width: 80%;
             display: flex;
@@ -37,16 +36,14 @@
         }
 
         .box-img {
-            width: 200px; /* Adjust size as needed */
-            height: 200px; /* Adjust size as needed */
+            width: 200px; 
+            height: 200px; 
             object-fit: cover;
             border-radius: 10px;
             margin-bottom: 20px;
         }
 
         .addActivityButton{
-            /* position: absolute; */
-            /* transform: translateX(-50%);transform: translateX(-50%); */
             width: 30%;
             height: 95%;
             background-color: rgb(62, 117, 62);
@@ -84,39 +81,46 @@
     </style>
 </head>
 <body>
-<div id="nav-placeholder"></div>
-<div class="box">
-    <h1>ACTIVITY TRACKER</h1>
-    <h2>Enter your daily activity here!</h2>
-    <img src="../assets/boy_exercise.avif" alt="Exercising image" class="box-img"/>
-
-    <div class="activity-container">
-        <select id="activityInput" class="activity-input">
-            <option value="Running">Running</option>
-            <option value="Swimming">Swimming</option>
-            <option value="Cycling">Cycling</option>
-            <!-- Add more dummy values as needed -->
-        </select>
-        <input type="number" id="hoursInput" class="hours-input" placeholder="Hours">
-        <button class="addActivityButton">Add Activity</button>
+    <div id="nav-placeholder"></div>
+    <div class="box">
+        <h1>ACTIVITY TRACKER</h1>
+        <h2>Enter your daily activity here!</h2>
+        <img src="../assets/boy_exercise.avif" alt="Exercising image" class="box-img"/>
+    
+        <div class="activity-container">
+            <select id="activityInput" class="activity-input">
+            </select>
+            <input type="number" id="hoursInput" class="hours-input" placeholder="Hours">
+            <button class="addActivityButton">Add Activity</button>
+        </div>
+    
+        <div id="activityList">
+        </div>
     </div>
-
-    <div id="activityList">
-        <!-- Added activities will be displayed here -->
-    </div>
-</div>
-
-<script>
-    $(function(){
-        $('.addActivityButton').click(function() {
-            var activityName = $('#activityInput').val();
-            var hours = $('#hoursInput').val();
-            var caloriesBurnt = Math.floor(Math.random() * 1000); // Dummy value for calories burnt
-
-            var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + caloriesBurnt;
-            $('<div>').text(activityDetails).appendTo('#activityList');
+    
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        $(function(){
+            $.getJSON("calories.php", function(data) {
+                $.each(data, function(index, item) {
+                    $('#activityInput').append($('<option>', {
+                        value: item.activityname,
+                        text: item.activityname,
+                        'data-calories': item.caloriesburnt 
+                    }));
+                });
+            });
+    
+            $('.addActivityButton').click(function() {
+                var activityName = $('#activityInput').val();
+                var hours = $('#hoursInput').val();
+                var caloriesBurntPerHour = $('#activityInput option:selected').data('calories'); 
+                var totalCaloriesBurnt = hours * caloriesBurntPerHour;
+                var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
+                $('<div>').text(activityDetails).appendTo('#activityList');
+            });
         });
-    });
-</script>
-</body>
-</html>
+    </script>
+    
+    </body>
+    </html>

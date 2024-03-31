@@ -1,11 +1,9 @@
 <?php
-// Database connection parameters
 $host = 'localhost';
-$dbname = 'Nutritrack';
+$dbname = 'nutritrack';
 $user = 'postgres';
-$password = 'apurvaneel*01';
+$password = 'swadhak';
 
-// Establish a connection to the PostgreSQL database using PDO
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -13,15 +11,28 @@ try {
     die("Error: Could not connect to the database: " . $e->getMessage());
 }
 
-// Define the SQL query to fetch data
-$query = "SELECT activityname FROM activity";
+if (isset($_GET['activity'])) {
+    $activityName = $_GET['activity'];
+    $query = "SELECT activityname, caloriesburnt FROM activity WHERE activityname = :activityName";
 
-// Execute the query
-try {
-    $statement = $pdo->query($query);
-    $data = $statement->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($data);
-} catch (PDOException $e) {
-    die("Error: Could not execute query: " . $e->getMessage());
+    try {
+        $statement = $pdo->prepare($query);
+        $statement->bindParam(':activityName', $activityName);
+        $statement->execute();
+        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($data);
+    } catch (PDOException $e) {
+        die("Error: Could not execute query: " . $e->getMessage());
+    }
+} else {
+    $query = "SELECT activityname, caloriesburnt FROM activity";
+
+    try {
+        $statement = $pdo->query($query);
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($data);
+    } catch (PDOException $e) {
+        die("Error: Could not execute query: " . $e->getMessage());
+    }
 }
 ?>
