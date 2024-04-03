@@ -46,7 +46,7 @@
 
             .addMealButton {
                 position: absolute;
-                top: 350px;
+                top: 400px;
                 left: 50%;
                 transform: translateX(-50%);
                 padding: 8px 16px;
@@ -69,6 +69,7 @@
                 padding: 20px;
                 text-align: center;
                 margin-top: 20px;
+                min-height: 600px;
             }
 
             #addMealForm h2 {
@@ -112,7 +113,20 @@
                 width: 80%;
                 margin-left: 10%;
             }
-        
+            
+            input[type="number"] {
+                width: 80%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid rgb(62, 117, 62);
+                border-radius: 5px;
+                margin-top: 10px;
+            }
+
+            input[type="number"]::placeholder {
+                color: rgb(62, 117, 62);
+            }
+            
         </style>
     </head>
     <body>
@@ -125,6 +139,7 @@
                 <p id="breakfastContent">Start your day with a nutritious breakfast.</p>
                 <select id="breakfastSelect">
                 </select>
+                <input type="number" id="breakfastQuantity" placeholder="Quantity" >
                 <button class="addMealButton" data-meal="breakfast">Add Meal</button>
                 <div id="breakfastList" ></div>
             </div>
@@ -136,6 +151,7 @@
                 <button class="addMealButton" data-meal="lunch">Add Meal</button>
                 <select id="lunchSelect">
                 </select>
+                <input type="number" id="lunchQuantity" placeholder="Quantity">
                 <div id="lunchList"></div>
             </div>
             
@@ -146,6 +162,7 @@
                 <button class="addMealButton" data-meal="snacks">Add Meal</button>
                 <select id="snacksSelect">
                 </select>
+                <input type="number" id="snacksQuantity" placeholder="Quantity">
                 <div id="snacksList"></div>
             </div>
             
@@ -156,6 +173,7 @@
                 <button class="addMealButton" data-meal="dinner">Add Meal</button>
                 <select id="dinnerSelect">
                 </select>
+                <input type="number" id="dinnerQuantity" placeholder="Quantity">
                 <div id="dinnerList"></div>
             </div>
         </div>
@@ -174,7 +192,6 @@
             var select = $('#' + mealType + 'Select');
             select.empty();
             $.each(foods, function (index, food) {
-                // Append option with both food name and serving information
                 select.append($('<option></option>').text(food.foodname + ' - ' + food.serving));
             });
         },
@@ -203,16 +220,18 @@
         
             function loadAddMeal(meal) {
                 const selectedOptionText = $('#' + meal + 'Select').find('option:selected').text(); 
-                const mealPara = $('<p class="addedText"></p>').text(selectedOptionText);
+                const quantity = $('#' + meal + 'Quantity').val(); 
+                const mealPara = $('<p class="addedText"></p>').text(selectedOptionText + ' - Quantity: ' + quantity); 
                 const separator = $('<div class="mealSeparator"></div>');
                 const mealList = $('#' + meal + 'List');
-                mealList.append(mealPara, separator); // Insert new meal and separator
-                
+                mealList.append(mealPara, separator); 
                 const mealBox = $('#' + meal + 'Box');
                 const currentHeight = mealBox.height();
-                const newHeight = currentHeight + mealPara.outerHeight() + separator.outerHeight();
+                const newHeight = currentHeight + mealPara.outerHeight() + separator.outerHeight()+50;
                 mealBox.height(newHeight);
+
             }
+                
         </script>
     </body>
     </html>

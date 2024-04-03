@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="import" href="../pages/navbar.html">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <style>
@@ -26,13 +27,13 @@
             background-color: #f9f7e8;
             border-radius: 10px;
             box-shadow: 0 0 10px;
-            margin: 40px auto 0 ;
-            height: 80vh;
+            height: 60vh;
             width: 80%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            
         }
 
         .box-img {
@@ -70,7 +71,7 @@
         .hours-input {
             width: 25%;
             height: 75%;
-            max-width: 100px;
+            max-width: 120px;
             margin-right: 10px;
         }
 
@@ -82,6 +83,7 @@
 </head>
 <body>
     <div id="nav-placeholder"></div>
+    <div class="dashboard">
     <div class="box">
         <h1>ACTIVITY TRACKER</h1>
         <h2>Enter your daily activity here!</h2>
@@ -97,9 +99,12 @@
         <div id="activityList">
         </div>
     </div>
-    
+    </div>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+        $(function () {
+                $("#nav-placeholder").load("navbar.html");
+            });
         $(function(){
             $.getJSON("calories.php", function(data) {
                 $.each(data, function(index, item) {
@@ -110,7 +115,7 @@
                     }));
                 });
             });
-    
+            
             $('.addActivityButton').click(function() {
                 var activityName = $('#activityInput').val();
                 var hours = $('#hoursInput').val();
