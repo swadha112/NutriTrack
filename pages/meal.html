@@ -177,6 +177,8 @@
                 <div id="dinnerList"></div>
             </div>
         </div>
+        <input type="hidden" id="userId" value="54">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
         <script>
             function loadPage(page) {
@@ -184,22 +186,22 @@
             }
         
             function fetchOptions(mealType) {
-    $.ajax({
-        url: 'suggestion.php',
-        type: 'GET',
-        dataType: 'json',
-        success: function (foods) {
-            var select = $('#' + mealType + 'Select');
-            select.empty();
-            $.each(foods, function (index, food) {
-                select.append($('<option></option>').text(food.foodname + ' - ' + food.serving));
-            });
-        },
-        error: function () {
-            console.error('Error fetching options');
-        }
-    });
-}
+                $.ajax({
+                    url: 'suggestion.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (foods) {
+                        var select = $('#' + mealType + 'Select');
+                        select.empty();
+                        $.each(foods, function (index, food) {
+                            select.append($('<option></option>').text(food.foodname + ' - ' + food.serving));
+                        });
+                    },
+                    error: function () {
+                        console.error('Error fetching options');
+                    }
+                });
+            }
 
         
 
@@ -219,18 +221,49 @@
             
         
             function loadAddMeal(meal) {
-                const selectedOptionText = $('#' + meal + 'Select').find('option:selected').text(); 
-                const quantity = $('#' + meal + 'Quantity').val(); 
-                const mealPara = $('<p class="addedText"></p>').text(selectedOptionText + ' - Quantity: ' + quantity); 
-                const separator = $('<div class="mealSeparator"></div>');
-                const mealList = $('#' + meal + 'List');
-                mealList.append(mealPara, separator); 
-                const mealBox = $('#' + meal + 'Box');
-                const currentHeight = mealBox.height();
-                const newHeight = currentHeight + mealPara.outerHeight() + separator.outerHeight()+50;
-                mealBox.height(newHeight);
+  const selectedOptionText = $('#' + meal + 'Select').find('option:selected').text();
+  const foodName = selectedOptionText.split(' - ')[0]; 
+  const quantity = $('#' + meal + 'Quantity').val();
 
+  const userId = $('#userId').val();
+  const mealType = meal;
+  console.log(userId);
+  console.log(foodName);
+  console.log(mealType);
+  console.log(quantity);
+  $.ajax({
+    url: 'usermeal.php',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      userId: userId,
+      mealType: mealType,
+      meal: foodName, 
+      quantity: quantity
+    },
+    success: function (response) {
+        if (response.success) {
+                console.log('Meal added successfully');
+            } else {
+                console.error('Failed to add meal');
             }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error('Error adding meal:', textStatus, errorThrown);
+        }
+  });
+
+
+    const mealPara = $('<p class="addedText"></p>').text(selectedOptionText + ' - Quantity: ' + quantity);
+    const separator = $('<div class="mealSeparator"></div>');
+    const mealList = $('#' + meal + 'List');
+    mealList.append(mealPara, separator);
+    const mealBox = $('#' + meal + 'Box');
+    const currentHeight = mealBox.height();
+    const newHeight = currentHeight + mealPara.outerHeight() + separator.outerHeight() + 50;
+    mealBox.height(newHeight);
+}
+            
                 
         </script>
     </body>
