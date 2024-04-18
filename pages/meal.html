@@ -1,268 +1,274 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>NutriTrack - Meals</title>
-        <link rel="import" href="../pages/navbar.html">
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        <style>
-            body {
-                background-color: rgb(62, 117, 62);
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack - Meals</title>
+    <link rel="import" href="../pages/navbar.html">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style>
+        body {
+            background-color: rgb(62, 117, 62);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-            .dashboard {
-                background-color: rgb(62, 117, 62);
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-around;
-                align-items: center;
-                min-height: 100vh;
-            }
+        .dashboard {
+            background-color: rgb(62, 117, 62);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-            .box {
-                position: relative;
-                width: 270px;
-                min-height: 500px;
-                margin: 20px;
-                padding: 20px;
-                background-color: #f9f7e8;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
-                text-align: center;
-                cursor: pointer;
-                transition: transform 0.2s ease-in-out;
-            }
+        .box {
+            position: relative;
+            width: 270px;
+            min-height: 500px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f7e8;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
 
-            .box-image {
-                width: 100%;
-                height: 150px;
-                object-fit: cover;
-                border-radius: 10px;
-            }
+        .box-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
 
-            .addMealButton {
-                position: absolute;
-                top: 400px;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 8px 16px;
-                background-color: rgb(62, 117, 62);
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s ease-in-out;
-            }
+        .addMealButton {
+            position: absolute;
+            top: 400px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 16px;
+            background-color: rgb(62, 117, 62);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
 
-            .addMealButton:hover {
-                background-color: #45a049;
-            }
+        .addMealButton:hover {
+            background-color: #45a049;
+        }
 
-            #addMealForm {
-                background-color: #f9f7e8;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                border-radius: 10px;
-                padding: 20px;
-                text-align: center;
-                margin-top: 20px;
-                min-height: 600px;
-            }
+        #addMealForm {
+            background-color: #f9f7e8;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            min-height: 600px;
+        }
 
-            #addMealForm h2 {
-                margin-bottom: 10px;
-            }
+        #addMealForm h2 {
+            margin-bottom: 10px;
+        }
 
-            select {
-                width: 80%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border: 1px solid  rgb(62, 117, 62) ;
-                border-radius: 5px;
-            }
+        select {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid  rgb(62, 117, 62) ;
+            border-radius: 5px;
+        }
 
-            button {
-                padding: 10px 20px;
-                background-color: rgb(62, 117, 62);
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s ease-in-out;
-            }
+        button {
+            padding: 10px 20px;
+            background-color: rgb(62, 117, 62);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
 
-            button:hover {
-                background-color: #45a049;
-            }
+        button:hover {
+            background-color: #45a049;
+        }
 
-            .addedText {
-                margin: 10px 0;
-                position: relative;
-                top: 70px;
-                
-            }
-
-            .mealSeparator {
-                position: relative;
-                top: 70px;
-                border-top: 2px solid #45a049;
-                margin: 10px 0;
-                width: 80%;
-                margin-left: 10%;
-            }
+        .addedText {
+            margin: 10px 0;
+            position: relative;
+            top: 70px;
             
-            input[type="number"] {
-                width: 80%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border: 1px solid rgb(62, 117, 62);
-                border-radius: 5px;
-                margin-top: 10px;
-            }
+        }
 
-            input[type="number"]::placeholder {
-                color: rgb(62, 117, 62);
-            }
-            
-        </style>
-    </head>
-    <body>
-        <div id="nav-placeholder"></div>
+        .mealSeparator {
+            position: relative;
+            top: 70px;
+            border-top: 2px solid #45a049;
+            margin: 10px 0;
+            width: 80%;
+            margin-left: 10%;
+        }
+        
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgb(62, 117, 62);
+            border-radius: 5px;
+            margin-top: 10px;
+        }
 
-        <div class="dashboard">
-            <div class="box" id="breakfastBox">
-                <img src="../assets/breakfast.jpeg" alt="breakfast" class="box-image">
-                <h2>Breakfast</h2>
-                <p id="breakfastContent">Start your day with a nutritious breakfast.</p>
-                <select id="breakfastSelect">
-                </select>
-                <input type="number" id="breakfastQuantity" placeholder="Quantity" >
-                <button class="addMealButton" data-meal="breakfast">Add Meal</button>
-                <div id="breakfastList" ></div>
-            </div>
-            
-            <div class="box" id="lunchBox">
-                <img src="../assets/lunch.jpeg" alt="lunch" class="box-image">
-                <h2>Lunch</h2>
-                <p id="lunchContent">Enjoy a balanced lunch for sustained energy.</p>
-                <button class="addMealButton" data-meal="lunch">Add Meal</button>
-                <select id="lunchSelect">
-                </select>
-                <input type="number" id="lunchQuantity" placeholder="Quantity">
-                <div id="lunchList"></div>
-            </div>
-            
-            <div class="box" id="snacksBox">
-                <img src="../assets/snack.jpeg" alt="snack" class="box-image">
-                <h2>Snacks</h2>
-                <p id="snacksContent">Choose healthy snacks for between-meal satisfaction.</p>
-                <button class="addMealButton" data-meal="snacks">Add Meal</button>
-                <select id="snacksSelect">
-                </select>
-                <input type="number" id="snacksQuantity" placeholder="Quantity">
-                <div id="snacksList"></div>
-            </div>
-            
-            <div class="box" id="dinnerBox">
-                <img src="../assets/dinner.jpeg" alt="dinner" class="box-image">
-                <h2>Dinner</h2>
-                <p id="dinnerContent">End your day with a well-balanced dinner.</p>
-                <button class="addMealButton" data-meal="dinner">Add Meal</button>
-                <select id="dinnerSelect">
-                </select>
-                <input type="number" id="dinnerQuantity" placeholder="Quantity">
-                <div id="dinnerList"></div>
-            </div>
+        input[type="number"]::placeholder {
+            color: rgb(62, 117, 62);
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="dashboard">
+        <div class="box" id="breakfastBox">
+            <img src="../assets/breakfast.jpeg" alt="breakfast" class="box-image">
+            <h2>Breakfast</h2>
+            <p id="breakfastContent">Start your day with a nutritious breakfast.</p>
+            <select id="breakfastSelect">
+            </select>
+            <input type="number" id="breakfastQuantity" placeholder="Quantity" >
+            <button class="addMealButton" data-meal="breakfast">Add Meal</button>
+            <div id="breakfastList" ></div>
         </div>
-        <input type="hidden" id="userId" value="54">
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-
-        <script>
-            function loadPage(page) {
-                window.location.href = page;
-            }
         
-            function fetchOptions(mealType) {
-                $.ajax({
-                    url: 'suggestion.php',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (foods) {
-                        var select = $('#' + mealType + 'Select');
-                        select.empty();
-                        $.each(foods, function (index, food) {
-                            select.append($('<option></option>').text(food.foodname + ' - ' + food.serving));
-                        });
-                    },
-                    error: function () {
-                        console.error('Error fetching options');
-                    }
-                });
-            }
-
+        <div class="box" id="lunchBox">
+            <img src="../assets/lunch.jpeg" alt="lunch" class="box-image">
+            <h2>Lunch</h2>
+            <p id="lunchContent">Enjoy a balanced lunch for sustained energy.</p>
+            <button class="addMealButton" data-meal="lunch">Add Meal</button>
+            <select id="lunchSelect">
+            </select>
+            <input type="number" id="lunchQuantity" placeholder="Quantity">
+            <div id="lunchList"></div>
+        </div>
         
+        <div class="box" id="snacksBox">
+            <img src="../assets/snack.jpeg" alt="snack" class="box-image">
+            <h2>Snacks</h2>
+            <p id="snacksContent">Choose healthy snacks for between-meal satisfaction.</p>
+            <button class="addMealButton" data-meal="snacks">Add Meal</button>
+            <select id="snacksSelect">
+            </select>
+            <input type="number" id="snacksQuantity" placeholder="Quantity">
+            <div id="snacksList"></div>
+        </div>
+        
+        <div class="box" id="dinnerBox">
+            <img src="../assets/dinner.jpeg" alt="dinner" class="box-image">
+            <h2>Dinner</h2>
+            <p id="dinnerContent">End your day with a well-balanced dinner.</p>
+            <button class="addMealButton" data-meal="dinner">Add Meal</button>
+            <select id="dinnerSelect">
+            </select>
+            <input type="number" id="dinnerQuantity" placeholder="Quantity">
+            <div id="dinnerList"></div>
+        </div>
+    </div>
+    <input type="hidden" id="userId" value="54">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
-            $(function () {
-                $("#nav-placeholder").load("navbar.html");
+    <script>
+         
+    function loadPage(page) {
+        window.location.href = page;
+    }
 
-                $('.addMealButton').on('click', function () {
-                    const mealType = $(this).data('meal');
-                    loadAddMeal(mealType);
-                });
-                fetchOptions('breakfast');
-                fetchOptions('lunch');
-                fetchOptions('snacks');
-                fetchOptions('dinner');
+    function fetchFoodSuggestions() {
+        if (!localStorage.getItem('foodSuggestions')) {
+            $.ajax({
+                url: 'suggestion.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function (foods) {
+                    localStorage.setItem('foodSuggestions', JSON.stringify(foods));
+                    populateSelectOptions(foods);
+                },
+                error: function () {
+                    console.error('Error fetching food suggestions');
+                }
             });
+        } else {
+            populateSelectOptions(JSON.parse(localStorage.getItem('foodSuggestions')));
+        }
+    }
 
-            
-        
-            function loadAddMeal(meal) {
-  const selectedOptionText = $('#' + meal + 'Select').find('option:selected').text();
-  const foodName = selectedOptionText.split(' - ')[0]; 
-  const quantity = $('#' + meal + 'Quantity').val();
+    function populateSelectOptions(foods) {
+        // Populate select options for each meal type
+        ['breakfast', 'lunch', 'snacks', 'dinner'].forEach(function(meal) {
+            var select = $('#' + meal + 'Select');
+            select.empty();
+            $.each(foods, function (index, food) {
+                select.append($('<option></option>').text(food.foodname + ' - ' + food.serving));
+            });
+        });
+    }
 
-  const userId = $('#userId').val();
-  const mealType = meal;
-  console.log(userId);
-  console.log(foodName);
-  console.log(mealType);
-  console.log(quantity);
-  $.ajax({
-    url: 'usermeal.php',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-      userId: userId,
-      mealType: mealType,
-      meal: foodName, 
-      quantity: quantity
+    $(function () {
+        $("#nav-placeholder").load("navbar.html");
+        $('.addMealButton').on('click', function () {
+            const mealType = $(this).data('meal');
+            loadAddMeal(mealType);
+        });
+        // Fetch food suggestions when the page loads
+        fetchFoodSuggestions();
+    });
+    
+        function loadAddMeal(meal) {
+const selectedOptionText = $('#' + meal + 'Select').find('option:selected').text();
+const foodName = selectedOptionText.split(' - ')[0]; 
+const quantity = $('#' + meal + 'Quantity').val();
+
+const userId = $('#userId').val();
+const mealType = meal;
+console.log(userId);
+console.log(foodName);
+console.log(mealType);
+console.log(quantity);
+$.ajax({
+url: 'usermeal.php',
+type: 'POST',
+dataType: 'json',
+data: {
+  userId: userId,
+  mealType: mealType,
+  meal: foodName, 
+  quantity: quantity
+},
+success: function (response) {
+    if (response.success) {
+            console.log('Meal added successfully');
+        } else {
+            console.error('Failed to add meal');
+        }
     },
-    success: function (response) {
-        if (response.success) {
-                console.log('Meal added successfully');
-            } else {
-                console.error('Failed to add meal');
-            }
-        },
-        
-  });
+    
+});
 
 
-    const mealPara = $('<p class="addedText"></p>').text(selectedOptionText + ' - Quantity: ' + quantity);
-    const separator = $('<div class="mealSeparator"></div>');
-    const mealList = $('#' + meal + 'List');
-    mealList.append(mealPara, separator);
-    const mealBox = $('#' + meal + 'Box');
-    const currentHeight = mealBox.height();
-    const newHeight = currentHeight + mealPara.outerHeight() + separator.outerHeight() + 50;
-    mealBox.height(newHeight);
+const mealPara = $('<p class="addedText"></p>').text(selectedOptionText + ' - Quantity: ' + quantity);
+const separator = $('<div class="mealSeparator"></div>');
+const mealList = $('#' + meal + 'List');
+mealList.append(mealPara, separator);
+const mealBox = $('#' + meal + 'Box');
+const currentHeight = mealBox.height();
+const newHeight = currentHeight + mealPara.outerHeight() + separator.outerHeight() + 50;
+mealBox.height(newHeight);
 }
+        
             
-                
-        </script>
-    </body>
-    </html>
+    </script>
+</body>
+</html>
