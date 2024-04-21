@@ -139,7 +139,7 @@
             <p id="breakfastContent">Start your day with a nutritious breakfast.</p>
             <select id="breakfastSelect">
             </select>
-            <input type="number" id="breakfastQuantity" placeholder="Quantity" >
+            <input type="number" id="breakfastQuantity" name="breakfastQuantity" placeholder="Quantity" >
             <button class="addMealButton" data-meal="breakfast">Add Meal</button>
             <div id="breakfastList" ></div>
         </div>
@@ -151,7 +151,7 @@
             <button class="addMealButton" data-meal="lunch">Add Meal</button>
             <select id="lunchSelect">
             </select>
-            <input type="number" id="lunchQuantity" placeholder="Quantity">
+            <input type="number" id="lunchQuantity" name="lunchQuantity" placeholder="Quantity">
             <div id="lunchList"></div>
         </div>
         
@@ -162,7 +162,7 @@
             <button class="addMealButton" data-meal="snacks">Add Meal</button>
             <select id="snacksSelect">
             </select>
-            <input type="number" id="snacksQuantity" placeholder="Quantity">
+            <input type="number" id="snacksQuantity" name="snacksQuantity" placeholder="Quantity">
             <div id="snacksList"></div>
         </div>
         
@@ -173,11 +173,11 @@
             <button class="addMealButton" data-meal="dinner">Add Meal</button>
             <select id="dinnerSelect">
             </select>
-            <input type="number" id="dinnerQuantity" placeholder="Quantity">
+            <input type="number" id="dinnerQuantity" name="dinnerQuantity" placeholder="Quantity">
             <div id="dinnerList"></div>
         </div>
     </div>
-    <input type="hidden" id="userId" value="54">
+    <input type="hidden" id="userId" value="15">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
     <script>
@@ -248,6 +248,7 @@ data: {
   quantity: quantity
 },
 success: function (response) {
+console.log(response);
     if (response.success) {
             console.log('Meal added successfully');
         } else {

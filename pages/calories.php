@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$dbname = 'nutritrack';
+$dbname = 'Nutritrack';
 $user = 'postgres';
-$password = 'swadhak';
+$password = 'apurvaneel*01';
 
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
