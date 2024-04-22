@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Hash the password before storing it
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $db = new PDO("pgsql:host=localhost; dbname=Nutritrack", 'postgres', 'apurvaneel*01');
+            $db = new PDO("pgsql:host=localhost; dbname=nutritrack", 'postgres', 'swadhak');
             $sql = "INSERT INTO users (username, password, firstname, lastname, age, height, weight, gender) 
                     VALUES (:username, :password, :firstname, :lastname, :age, :height, :weight, :gender)";
             $stmt = $db->prepare($sql);
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
 
             // Redirect to dashboard.html after successful insertion
-            header("Location: dashboard.html");
+            header("Location: /NutriTrack/index.html");
             exit();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
