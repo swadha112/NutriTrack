@@ -100,11 +100,87 @@
         </div>
     </div>
     </div>
+    <input type="hidden" id="userId" value="15">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+
+        // function loadPage(page){
+        //     window.location.href = page;
+        // }
+        function fetchActivities() {
+        if (!localStorage.getItem('activities')) {
+            $.ajax({
+                url: 'calories.php',
+                type: 'GET',
+                dataType: 'json',
+                success: function (activityName) {
+                    localStorage.setItem('activities', JSON.stringify(activityName));
+                    populateSelectOptions(activityName);
+                },
+                error: function () {
+                    console.error('Error fetching activities');
+                }
+            });
+        } else {
+            populateSelectOptions(JSON.parse(localStorage.getItem('activities')));
+        }
+    }
+    function populateSelectOptions(activities) {
+    $('#activityInput').empty();
+    $.each(activities, function (index, activity) {
+        $('#activityInput').append($('<option>', {
+            value: activity.activityname,
+            text: activity.activityname,
+            'data-calories': activity.caloriesburnt 
+        }));
+    });
+}
+
         $(function () {
                 $("#nav-placeholder").load("navbar.html");
-            });
+        }),
+
+            $('.addActivityButton').on('click', function() {
+                const activityName = $('#activityInput').val();
+                const activityTime = $('#hoursInput').val();
+                const userId= $('#userId').val();
+                const caloriesBurntPerHour = $('#activityInput option:selected').data('calories');
+                const totalCaloriesBurnt = activityTime * caloriesBurntPerHour;
+
+                //call functiion to add activity
+                addActivity(userId, activityName, activityTime, totalCaloriesBurnt);
+
+                //display activity details witth total calories burnt
+                const activityDetails = activityName + ' - ' +  activityTime + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
+                $('<div>').text(activityDetails).appendTo('#activityList');
+                });
+            
+
+            function addActivity(userId, activityName, activityTime, totalCaloriesBurnt){
+                //make AJAX call to addd acttivittyy to database
+                $.ajax({
+                    url: 'useractivity.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        userId : userId,
+                        activityName: activityName,
+                        activityTime: activityTime,
+                        totalCaloriesBurnt: totalCaloriesBurnt
+                    },
+                    success: function(response){
+                        if(response.success){
+                            console.log("activity added successfully");
+                        } else{
+                            console.error("failed to add activity: "+ response.error);
+                        }
+                    },
+                    error: function(){
+                        console.error("error adding activiy");
+                    }
+                });
+            }
+
         $(function(){
             $.getJSON("calories.php", function(data) {
                 $.each(data, function(index, item) {
@@ -116,14 +192,14 @@
                 });
             });
             
-            $('.addActivityButton').click(function() {
-                var activityName = $('#activityInput').val();
-                var hours = $('#hoursInput').val();
-                var caloriesBurntPerHour = $('#activityInput option:selected').data('calories'); 
-                var totalCaloriesBurnt = hours * caloriesBurntPerHour;
-                var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
-                $('<div>').text(activityDetails).appendTo('#activityList');
-            });
+            // $('.addActivityButton').click(function() {
+            //     var activityName = $('#activityInput').val();
+            //     var hours = $('#hoursInput').val();
+            //     var caloriesBurntPerHour = $('#activityInput option:selected').data('calories'); 
+            //     var totalCaloriesBurnt = hours * caloriesBurntPerHour;
+            //     var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
+            //     $('<div>').text(activityDetails).appendTo('#activityList');
+            // });
         });
     </script>
     
