@@ -103,10 +103,9 @@
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
     $(function () {
-    // Load the navigation bar
+    
     $("#nav-placeholder").load("navbar.html");
-
-    // Load the activities and populate the activity dropdown
+n
     $.getJSON("calories.php", function(data) {
         $.each(data, function(index, item) {
             $('#activityInput').append($('<option>', {
@@ -117,42 +116,32 @@
         });
     });
 
-    // Initialize a variable to track the total calories burned
     var totalCaloriesBurned = 0;
 
-    // Handle the addition of a new activity
     $('.addActivityButton').click(function() {
-        // Get activity details
+        
         var activityName = $('#activityInput').val();
         var hours = parseFloat($('#hoursInput').val());
         var caloriesBurntPerHour = $('#activityInput option:selected').data('calories'); 
-        
-        // Calculate total calories burned for the current activity
         var totalCaloriesBurnt = hours * caloriesBurntPerHour;
-
-        // Add the activity details to the activity list
         var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
         $('<div>').text(activityDetails).appendTo('#activityList');
-
-        // Update the total calories burned
         totalCaloriesBurned += totalCaloriesBurnt;
 
-        // Send the data to the server using AJAX
         $.ajax({
-            url: 'useractivity.php', // Specify the path to the PHP file
+            url: 'useractivity.php', 
             type: 'POST',
             data: {
-                user_id: '54', // Specify the user_id (you may retrieve it from a session or hidden input)
+                user_id: '54', 
                 activity_name: activityName,
                 activity_time: hours,
                 total_calories_burnt: totalCaloriesBurnt
             },
             success: function(response) {
-                // Handle successful response from the server
-                console.log(response); // Log the response or show a success message to the user
+                
+                console.log(response); 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                // Handle error response from the server
                 console.log('Error:', textStatus, errorThrown);
             }
         });

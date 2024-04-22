@@ -32,15 +32,13 @@
 
     <script>
         function submitForm() {
-            // Gather form data
+
             var username = document.getElementById("newUsername").value;
             var password = document.getElementById("newPassword").value;
-
-            // Store username and password in localStorage
             localStorage.setItem("username", username);
             localStorage.setItem("password", password);
 
-            return true; // Allow form submission
+            return true;
         }
     </script>
 </body>
