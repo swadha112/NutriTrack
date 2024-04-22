@@ -100,107 +100,66 @@
         </div>
     </div>
     </div>
-    <input type="hidden" id="userId" value="15">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+    $(function () {
+    // Load the navigation bar
+    $("#nav-placeholder").load("navbar.html");
 
-        // function loadPage(page){
-        //     window.location.href = page;
-        // }
-        function fetchActivities() {
-        if (!localStorage.getItem('activities')) {
-            $.ajax({
-                url: 'calories.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function (activityName) {
-                    localStorage.setItem('activities', JSON.stringify(activityName));
-                    populateSelectOptions(activityName);
-                },
-                error: function () {
-                    console.error('Error fetching activities');
-                }
-            });
-        } else {
-            populateSelectOptions(JSON.parse(localStorage.getItem('activities')));
-        }
-    }
-    function populateSelectOptions(activities) {
-    $('#activityInput').empty();
-    $.each(activities, function (index, activity) {
-        $('#activityInput').append($('<option>', {
-            value: activity.activityname,
-            text: activity.activityname,
-            'data-calories': activity.caloriesburnt 
-        }));
-    });
-}
-
-        $(function () {
-                $("#nav-placeholder").load("navbar.html");
-        }),
-
-            $('.addActivityButton').on('click', function() {
-                const activityName = $('#activityInput').val();
-                const activityTime = $('#hoursInput').val();
-                const userId= $('#userId').val();
-                const caloriesBurntPerHour = $('#activityInput option:selected').data('calories');
-                const totalCaloriesBurnt = activityTime * caloriesBurntPerHour;
-
-                //call functiion to add activity
-                addActivity(userId, activityName, activityTime, totalCaloriesBurnt);
-
-                //display activity details witth total calories burnt
-                const activityDetails = activityName + ' - ' +  activityTime + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
-                $('<div>').text(activityDetails).appendTo('#activityList');
-                });
-            
-
-            function addActivity(userId, activityName, activityTime, totalCaloriesBurnt){
-                //make AJAX call to addd acttivittyy to database
-                $.ajax({
-                    url: 'useractivity.php',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        userId : userId,
-                        activityName: activityName,
-                        activityTime: activityTime,
-                        totalCaloriesBurnt: totalCaloriesBurnt
-                    },
-                    success: function(response){
-                        if(response.success){
-                            console.log("activity added successfully");
-                        } else{
-                            console.error("failed to add activity: "+ response.error);
-                        }
-                    },
-                    error: function(){
-                        console.error("error adding activiy");
-                    }
-                });
-            }
-
-        $(function(){
-            $.getJSON("calories.php", function(data) {
-                $.each(data, function(index, item) {
-                    $('#activityInput').append($('<option>', {
-                        value: item.activityname,
-                        text: item.activityname,
-                        'data-calories': item.caloriesburnt 
-                    }));
-                });
-            });
-            
-            // $('.addActivityButton').click(function() {
-            //     var activityName = $('#activityInput').val();
-            //     var hours = $('#hoursInput').val();
-            //     var caloriesBurntPerHour = $('#activityInput option:selected').data('calories'); 
-            //     var totalCaloriesBurnt = hours * caloriesBurntPerHour;
-            //     var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
-            //     $('<div>').text(activityDetails).appendTo('#activityList');
-            // });
+    // Load the activities and populate the activity dropdown
+    $.getJSON("calories.php", function(data) {
+        $.each(data, function(index, item) {
+            $('#activityInput').append($('<option>', {
+                value: item.activityname,
+                text: item.activityname,
+                'data-calories': item.caloriesburnt 
+            }));
         });
+    });
+
+    // Initialize a variable to track the total calories burned
+    var totalCaloriesBurned = 0;
+
+    // Handle the addition of a new activity
+    $('.addActivityButton').click(function() {
+        // Get activity details
+        var activityName = $('#activityInput').val();
+        var hours = parseFloat($('#hoursInput').val());
+        var caloriesBurntPerHour = $('#activityInput option:selected').data('calories'); 
+        
+        // Calculate total calories burned for the current activity
+        var totalCaloriesBurnt = hours * caloriesBurntPerHour;
+
+        // Add the activity details to the activity list
+        var activityDetails = activityName + ' - ' + hours + ' hours - Calories Burnt: ' + totalCaloriesBurnt;
+        $('<div>').text(activityDetails).appendTo('#activityList');
+
+        // Update the total calories burned
+        totalCaloriesBurned += totalCaloriesBurnt;
+
+        // Send the data to the server using AJAX
+        $.ajax({
+            url: 'useractivity.php', // Specify the path to the PHP file
+            type: 'POST',
+            data: {
+                user_id: '54', // Specify the user_id (you may retrieve it from a session or hidden input)
+                activity_name: activityName,
+                activity_time: hours,
+                total_calories_burnt: totalCaloriesBurnt
+            },
+            success: function(response) {
+                // Handle successful response from the server
+                console.log(response); // Log the response or show a success message to the user
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle error response from the server
+                console.log('Error:', textStatus, errorThrown);
+            }
+        });
+    });
+});
+
+
     </script>
     
     </body>
