@@ -1,9 +1,9 @@
 <?php
 // Connect to your PostgreSQL database
 $host = 'localhost';
-$dbname = 'Nutritrack';
+$dbname = 'nutritrack';
 $user = 'postgres';
-$password = 'apurvaneel*01';
+$password = 'swadhak';
 
 
 try {

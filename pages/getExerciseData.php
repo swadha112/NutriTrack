@@ -1,9 +1,9 @@
 <?php
 // Connect to your PostgreSQL database
 $host = 'localhost';
-$dbname = 'your_database_name';
-$user = 'your_database_user';
-$password = 'your_database_password';
+$dbname = 'nutritrack';
+$user = 'postgres';
+$password = 'swadhak';
 
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);

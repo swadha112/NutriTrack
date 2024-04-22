@@ -1,9 +1,9 @@
 <?php
 var_dump($_POST);
 $host = 'localhost';
-$dbname = 'Nutritrack';
+$dbname = 'nutritrack';
 $user = 'postgres';
-$password = 'apurvaneel*01';
+$password = 'swadhak';
 
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);

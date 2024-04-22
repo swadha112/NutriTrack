@@ -1,9 +1,9 @@
 <?php
 // PostgreSQL database connection parameters
 $host = 'localhost'; // e.g., localhost
-$dbname = 'Nutritrack';
+$dbname = 'nutritrack';
 $user = 'postgres';
-$password = 'apurvaneel*01';
+$password = 'swadhak';
 
 try {
     // Connect to PostgreSQL
