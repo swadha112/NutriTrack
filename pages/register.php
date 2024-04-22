@@ -2,7 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['newUsername'];
     $password = $_POST['newPassword'];
-    $db = new PDO("pgsql:host=localhost;dbname=nutritrack", 'postgres', 'swadhak');
+    $db = new PDO("pgsql:host=localhost;dbname=Nutritrack", 'postgres', 'apurvaneel*01');
     $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':username', $username);

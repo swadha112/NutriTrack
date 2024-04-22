@@ -1,22 +1,42 @@
 <?php
 // Connect to your PostgreSQL database
 $host = 'localhost';
-$dbname = 'nutritrack';
+$dbname = 'Nutritrack';
 $user = 'postgres';
-$password = 'swadhak';
-
+$password = 'apurvaneel*01';
 
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Execute a query to fetch exercise data
-    $stmt = $pdo->query("SELECT meals, quantities FROM user_meals WHERE user_id = ? AND meal_type = ?");
+    // Prepare a query to fetch meals data for the specified user
+    $stmt = $pdo->prepare("SELECT meal_type, meals FROM user_meals WHERE user_id = ?");
+    $stmt->execute([$_GET['user_id']]);
+    $mealsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Fetch exercise data as an associative array
-    $exerciseData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Count the number of items in each meal type and calculate the total count
+    $mealCounts = [];
+    $totalCount = 0;
+    foreach ($mealsData as $meal) {
+        $mealType = $meal['meal_type'];
+        $meals = json_decode($meal['meals'], true); // Decode JSON array
+        $count = count($meals);
+        $mealCounts[$mealType] = $count;
+        $totalCount += $count;
+    }
 
-    // Return exercise data as JSON
+    // Calculate the ratio of each meal type
+    $mealData = [];
+    foreach ($mealCounts as $mealType => $count) {
+        $ratio = $count / $totalCount;
+        $mealData[] = [
+            'meal_type' => $mealType,
+            'meal_count' => $count,
+            'ratio' => $ratio
+        ];
+    }
+
+    // Return meal data with ratios as JSON
     header('Content-Type: application/json');
     echo json_encode($mealData);
 } catch (PDOException $e) {

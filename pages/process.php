@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $db = new PDO("pgsql:host=localhost; dbname=nutritrack", 'postgres', 'swadhak');
+            $db = new PDO("pgsql:host=localhost; dbname=Nutritrack", 'postgres', 'apurvaneel*01');
             $sql = "INSERT INTO users (username, password, firstname, lastname, age, height, weight, gender) 
                     VALUES (:username, :password, :firstname, :lastname, :age, :height, :weight, :gender)";
             $stmt = $db->prepare($sql);

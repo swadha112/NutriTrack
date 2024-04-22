@@ -1,16 +1,18 @@
 <?php
 // Connect to your PostgreSQL database
 $host = 'localhost';
-$dbname = 'nutritrack';
+$dbname = 'Nutritrack';
 $user = 'postgres';
-$password = 'swadhak';
+$password = 'apurvaneel*01';
 
 try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $userId = $_GET['user_id'];
+
     // Execute a query to fetch exercise data
-    $stmt = $pdo->query("SELECT exercise, calories_burnt FROM exercise_data");
+    $stmt = $pdo->prepare("SELECT activity_name, activity_time, total_calories_burnt FROM user_activity WHERE user_id = ? ");
 
     // Fetch exercise data as an associative array
     $exerciseData = $stmt->fetchAll(PDO::FETCH_ASSOC);

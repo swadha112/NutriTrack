@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
 
   try {
-    $db = new PDO("pgsql:host=localhost; dbname=nutritrack", 'postgres', 'swadhak');
-
+    $db = new PDO("pgsql:host=localhost; dbname=Nutritrack", 'postgres', 'apurvaneel*01');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Enable error reporting
     
     $sql = "SELECT * FROM users WHERE username = :username";
     $stmt = $db->prepare($sql);
@@ -16,12 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->rowCount() > 0) {
       $user = $stmt->fetch(PDO::FETCH_ASSOC);
-      echo "Provided password: $password\n";
-      echo "Stored hash: " . $user['password'] . "\n";
-      echo "Hashed input password: " . password_hash($password, PASSWORD_DEFAULT) . "\n";
 
       if (password_verify($password, $user['password'])) {
-        
         $_SESSION['user'] = [
           'username' => $user['username'],
           'firstName' => $user['firstname'],
@@ -37,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "Invalid username. Please try again.";
     }
   } catch (PDOException $e) {
-    
     echo "An error occurred while trying to log in. Please try again later.";
     error_log($e->getMessage()); 
   }
